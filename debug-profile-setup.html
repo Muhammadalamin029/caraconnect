@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Profile Setup</title>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 8px 12px;
+            background: #334155;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            color: white;
+            margin: 8px 0;
+        }
+        .btn-primary {
+            background: #06b6d4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background: #0891b2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Complete your profile</h2>
+        <p>Help us personalize your CaraConnect experience</p>
+        
+        <form>
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="width: 96px; height: 96px; background: #334155; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 48px;">
+                    👤
+                </div>
+                <p style="color: #94a3b8; font-size: 14px; margin-top: 8px;">Profile photo</p>
+            </div>
+
+            <div>
+                <label style="display: block; color: #cbd5e1; font-size: 14px; margin-bottom: 4px;">Phone Number *</label>
+                <input type="tel" class="input-field" placeholder="+234 800 000 0000" required>
+            </div>
+
+            <div>
+                <label style="display: block; color: #cbd5e1; font-size: 14px; margin-bottom: 4px;">Gender</label>
+                <select class="input-field">
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="prefer_not_to_say">Prefer not to say</option>
+                </select>
+            </div>
+
+            <div>
+                <label style="display: block; color: #cbd5e1; font-size: 14px; margin-bottom: 4px;">Preferred Payment Method</label>
+                <select class="input-field">
+                    <option value="card">Card</option>
+                    <option value="bank_transfer">Bank Transfer</option>
+                    <option value="wallet">Wallet</option>
+                </select>
+            </div>
+
+            <div>
+                <label style="display: block; color: #cbd5e1; font-size: 14px; margin-bottom: 8px;">What would you like to do on CaraConnect? *</label>
+                
+                <label style="display: flex; align-items: center; margin: 8px 0;">
+                    <input type="checkbox" style="margin-right: 8px;">
+                    <span style="color: #cbd5e1; font-size: 14px;">
+                        <strong>Run Tasks</strong> - Complete tasks for others and earn money
+                    </span>
+                </label>
+                
+                <label style="display: flex; align-items: center; margin: 8px 0;">
+                    <input type="checkbox" style="margin-right: 8px;">
+                    <span style="color: #cbd5e1; font-size: 14px;">
+                        <strong>Post Tasks</strong> - Request help with your errands
+                    </span>
+                </label>
+            </div>
+
+            <button type="submit" class="btn-primary" style="margin: 20px 0;">
+                Complete Setup
+            </button>
+
+            <div style="text-align: center;">
+                <button type="button" style="background: none; border: none; color: #94a3b8; font-size: 14px; cursor: pointer;">
+                    Skip for now
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        console.log('Profile setup page loaded');
+        console.log('If you can see this, the page is rendering correctly');
+    </script>
+</body>
+</html>

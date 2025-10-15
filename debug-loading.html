@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Loading Issue</title>
+</head>
+<body>
+    <h1>Debug Loading Issue</h1>
+    <p>Open your browser console and check for these messages:</p>
+    <ul>
+        <li>"AuthProvider useEffect running"</li>
+        <li>"Initial session check: {session, error}"</li>
+        <li>"Loading user profile for: [user-id]" or "No session, setting loading to false"</li>
+        <li>"User profile loaded: [profile]" or "Error fetching user profile: [error]"</li>
+        <li>"Setting loading to false"</li>
+    </ul>
+    
+    <h2>Common Issues:</h2>
+    <ol>
+        <li><strong>Supabase connection error:</strong> Check if VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set correctly</li>
+        <li><strong>Database error:</strong> Check if the user profile exists in the database</li>
+        <li><strong>Infinite loop:</strong> Check if loadUserProfile is being called repeatedly</li>
+        <li><strong>Network error:</strong> Check if there are CORS or network issues</li>
+    </ol>
+    
+    <h2>Quick Fixes:</h2>
+    <ol>
+        <li>Check browser console for error messages</li>
+        <li>Verify environment variables in .env.local</li>
+        <li>Check Supabase dashboard for any errors</li>
+        <li>Try refreshing the page</li>
+        <li>Clear browser cache and cookies</li>
+    </ol>
+</body>
+</html>
