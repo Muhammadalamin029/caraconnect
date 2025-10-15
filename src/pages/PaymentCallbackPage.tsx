@@ -2,7 +2,6 @@ import { useEffect, useState, type FC } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { usePayment } from '../contexts/PaymentContext';
-import { updateTransaction } from '../firebase/database';
 import { CheckCircleIcon, XCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 import LoadingSpinner from '../components/LoadingSpinner';
 
