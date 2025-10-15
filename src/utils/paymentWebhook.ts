@@ -3,7 +3,6 @@
  * Handles IPG payment callbacks and updates transaction status
  */
 
-import ipgWebCheckoutService from '../services/ipgPaymentService';
 import { updateTransaction, getWallet, updateWallet } from '../firebase/database';
 
 export interface IPGWebhookData {
