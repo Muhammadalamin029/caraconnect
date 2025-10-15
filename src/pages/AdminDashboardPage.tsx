@@ -1,18 +1,13 @@
 import { useState, useEffect, type FC } from 'react';
-import { useAuth } from '../contexts/AuthContext';
 import { 
   UserGroupIcon, 
   ClipboardDocumentListIcon, 
   CurrencyDollarIcon,
-  ExclamationTriangleIcon,
   CheckCircleIcon,
   ClockIcon,
   XCircleIcon,
   ChartBarIcon,
-  Cog6ToothIcon,
   ShieldCheckIcon,
-  EyeIcon,
-  PencilIcon,
   TrashIcon
 } from '@heroicons/react/24/outline';
 import { 
@@ -20,18 +15,15 @@ import {
   getTasks, 
   getAllTransactions, 
   getAllWallets,
-  updateUser,
   deleteUser,
   updateTask,
   deleteTask,
-  updateTransaction,
   getAllReviews
 } from '../firebase/database';
 import type { User, Task, Transaction, Wallet, Review } from '../firebase/schema';
 import toast from 'react-hot-toast';
 
 const AdminDashboardPage: FC = () => {
-  const { userProfile } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({
@@ -119,18 +111,13 @@ const AdminDashboardPage: FC = () => {
     });
   };
 
-  const handleUserAction = async (userId: string, action: 'activate' | 'deactivate' | 'delete') => {
+  const handleUserAction = async (userId: string, action: 'delete') => {
     try {
       if (action === 'delete') {
         await deleteUser(userId);
         toast.success('User deleted successfully');
-      } else {
-        await updateUser(userId, { 
-          is_active: action === 'activate' 
-        });
-        toast.success(`User ${action}d successfully`);
+        await loadAdminData();
       }
-      await loadAdminData();
     } catch (error) {
       console.error('Error updating user:', error);
       toast.error('Failed to update user');
@@ -353,22 +340,12 @@ const AdminDashboardPage: FC = () => {
                         {formatDate(user.created_at)}
                       </td>
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          user.is_active !== false 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {user.is_active !== false ? 'Active' : 'Inactive'}
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          Active
                         </span>
                       </td>
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex space-x-2">
-                          <button
-                            onClick={() => handleUserAction(user.id, user.is_active !== false ? 'deactivate' : 'activate')}
-                            className="text-cyan-400 hover:text-cyan-300"
-                          >
-                            <PencilIcon className="h-4 w-4" />
-                          </button>
                           <button
                             onClick={() => handleUserAction(user.id, 'delete')}
                             className="text-red-400 hover:text-red-300"
@@ -542,8 +519,8 @@ const AdminDashboardPage: FC = () => {
                           </div>
                           <p className="text-white mb-2">{review.comment}</p>
                           <div className="flex items-center space-x-4 text-sm text-slate-400">
-                            <span>From: {review.reviewer_name}</span>
-                            <span>To: {review.reviewee_name}</span>
+                            <span>From: {review.reviewer_id}</span>
+                            <span>To: {review.reviewee_id}</span>
                           </div>
                         </div>
                       </div>
