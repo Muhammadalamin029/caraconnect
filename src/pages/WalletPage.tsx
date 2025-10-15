@@ -2,6 +2,7 @@ import { useState, useEffect, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useWallet } from '../contexts/WalletContext';
+import { usePayment } from '../contexts/PaymentContext';
 import { 
   PlusIcon, 
   ArrowDownTrayIcon, 
@@ -19,9 +20,11 @@ const WalletPage: FC = () => {
   const navigate = useNavigate();
   const { userProfile } = useAuth();
   const { wallet, transactions, loading, needsWalletSetup, deposit, withdraw, refreshWallet } = useWallet();
+  const { isProcessing, initiatePayment } = usePayment();
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [depositAmount, setDepositAmount] = useState('');
+  const [depositMethod, setDepositMethod] = useState<'card' | 'bank_transfer' | 'wallet'>('card');
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [bankDetails, setBankDetails] = useState({
     accountNumber: '',
@@ -126,11 +129,24 @@ const WalletPage: FC = () => {
     }
 
     try {
-      await deposit(amount, 'card');
-      toast.success('Deposit initiated successfully!');
-      setShowDepositModal(false);
-      setDepositAmount('');
-      await refreshWallet();
+      if (depositMethod === 'wallet') {
+        // Handle wallet-to-wallet transfer
+        await deposit(amount, 'wallet');
+        toast.success('Deposit completed successfully!');
+        setShowDepositModal(false);
+        setDepositAmount('');
+        await refreshWallet();
+      } else {
+        // Handle external payment (card/bank transfer) via IPG
+        const paymentResponse = await initiatePayment(amount, depositMethod, 'Wallet deposit');
+        
+        if (paymentResponse.success && paymentResponse.paymentUrl) {
+          // Redirect to IPG payment page
+          window.location.href = paymentResponse.paymentUrl;
+        } else {
+          throw new Error(paymentResponse.error || 'Payment initiation failed');
+        }
+      }
     } catch (error: any) {
       toast.error(error.message || 'Deposit failed');
     }
@@ -422,19 +438,46 @@ const WalletPage: FC = () => {
                     required
                   />
                 </div>
+                
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Payment Method
+                  </label>
+                  <select
+                    value={depositMethod}
+                    onChange={(e) => setDepositMethod(e.target.value as 'card' | 'bank_transfer' | 'wallet')}
+                    className="input-field"
+                    required
+                  >
+                    <option value="card">💳 Credit/Debit Card</option>
+                    <option value="bank_transfer">🏦 Bank Transfer</option>
+                    <option value="wallet">💰 Wallet Transfer</option>
+                  </select>
+                </div>
+
+                {depositMethod !== 'wallet' && (
+                  <div className="mb-4 p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+                    <p className="text-sm text-blue-300">
+                      You will be redirected to a secure payment page to complete your transaction.
+                    </p>
+                  </div>
+                )}
+
                 <div className="flex gap-3">
                   <button
                     type="button"
                     onClick={() => setShowDepositModal(false)}
                     className="btn-secondary flex-1"
+                    disabled={isProcessing}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     className="btn-primary flex-1"
+                    disabled={isProcessing}
                   >
-                    Add Funds
+                    {isProcessing ? 'Processing...' : 'Add Funds'}
                   </button>
                 </div>
               </form>

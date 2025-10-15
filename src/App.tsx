@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { TaskProvider } from './contexts/TaskContext';
 import { WalletProvider } from './contexts/WalletContext';
+import { PaymentProvider } from './contexts/PaymentContext';
 import { Toaster } from 'react-hot-toast';
 
 // Pages
@@ -21,6 +22,7 @@ import TaskTemplatePage from './pages/TaskTemplatePage';
 import ChatPage from './pages/ChatPage';
 import WalletPage from './pages/WalletPage';
 import WalletSetupPage from './pages/WalletSetupPage';
+import PaymentCallbackPage from './pages/PaymentCallbackPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import LoadingSpinner from './components/LoadingSpinner';
 import Layout from './components/Layout';
@@ -77,7 +79,8 @@ function App() {
     <AuthProvider>
       <TaskProvider>
         <WalletProvider>
-          <Router>
+          <PaymentProvider>
+            <Router>
             <div className="min-h-screen bg-slate-900">
               <Routes>
             {/* Public Routes */}
@@ -210,6 +213,14 @@ function App() {
               } 
             />
             <Route 
+              path="/payment/callback" 
+              element={
+                <ProtectedRoute>
+                  <PaymentCallbackPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="/my-tasks" 
               element={
                 <ProtectedRoute>
@@ -285,6 +296,7 @@ function App() {
           <div id="recaptcha-container"></div>
             </div>
           </Router>
+          </PaymentProvider>
         </WalletProvider>
       </TaskProvider>
     </AuthProvider>

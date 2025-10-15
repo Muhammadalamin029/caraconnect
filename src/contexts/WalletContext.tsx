@@ -13,7 +13,7 @@ interface WalletContextType {
   transactions: Transaction[];
   loading: boolean;
   needsWalletSetup: boolean;
-  deposit: (amount: number, paymentMethod: 'card' | 'bank_transfer') => Promise<void>;
+  deposit: (amount: number, paymentMethod: 'card' | 'bank_transfer' | 'wallet') => Promise<void>;
   withdraw: (amount: number, bankDetails: any) => Promise<void>;
   payForTask: (taskId: string, amount: number) => Promise<void>;
   receivePayment: (taskId: string, amount: number) => Promise<void>;
@@ -143,7 +143,7 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
-  const deposit = async (amount: number, paymentMethod: 'card' | 'bank_transfer') => {
+  const deposit = async (amount: number, paymentMethod: 'card' | 'bank_transfer' | 'wallet') => {
     if (!user || !wallet) {
       throw new Error('User must be authenticated and have a wallet');
     }
@@ -164,29 +164,29 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
         payment_reference: `DEP_${Date.now()}`,
       });
 
-      // TODO: Integrate with payment gateway (Interswitch)
-      // For now, we'll simulate a successful payment
-      setTimeout(async () => {
-        try {
-          // Update transaction status
-          const { updateTransaction } = await import('../firebase/database');
-          
-          await updateTransaction(transaction.id, {
-            status: 'completed',
-          });
+      // For wallet-to-wallet transfers, process immediately
+      if (paymentMethod === 'wallet') {
+        // Update transaction status
+        const { updateTransaction } = await import('../firebase/database');
+        
+        await updateTransaction(transaction.id, {
+          status: 'completed',
+        });
 
-          // Update wallet balance
-          const newBalance = wallet.balance + amount;
-          await updateWallet(wallet.id, {
-            balance: newBalance,
-          }, user.uid);
+        // Update wallet balance
+        const newBalance = wallet.balance + amount;
+        await updateWallet(wallet.id, {
+          balance: newBalance,
+        }, user.uid);
 
-          // Refresh wallet data
-          await refreshWallet();
-        } catch (error) {
-          console.error('Error processing deposit:', error);
-        }
-      }, 2000); // Simulate 2-second processing time
+        // Refresh wallet data
+        await refreshWallet();
+      } else {
+        // For external payment methods (card, bank_transfer), 
+        // the PaymentContext will handle the IPG integration
+        // This function now just creates the pending transaction
+        console.log('External payment initiated. Use PaymentContext to complete the payment flow.');
+      }
 
     } catch (error) {
       console.error('Error creating deposit:', error);
