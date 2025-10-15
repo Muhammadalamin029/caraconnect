@@ -138,13 +138,21 @@ const WalletPage: FC = () => {
         await refreshWallet();
       } else {
         // Handle external payment (card/bank transfer) via IPG
-        const paymentResponse = await initiatePayment(amount, depositMethod, 'Wallet deposit');
+        console.log('Initiating IPG payment...', { amount, depositMethod });
         
-        if (paymentResponse.success && paymentResponse.paymentUrl) {
-          // Redirect to IPG payment page
-          window.location.href = paymentResponse.paymentUrl;
-        } else {
-          throw new Error(paymentResponse.error || 'Payment initiation failed');
+        try {
+          const paymentResponse = await initiatePayment(amount, depositMethod, 'Wallet deposit');
+          console.log('Payment response:', paymentResponse);
+          
+          if (paymentResponse.success) {
+            console.log('Payment initiated successfully, redirecting to IPG...');
+            // The redirect happens automatically in the PaymentContext
+          } else {
+            throw new Error(paymentResponse.error || 'Payment initiation failed');
+          }
+        } catch (error) {
+          console.error('Payment initiation error:', error);
+          throw error;
         }
       }
     } catch (error: any) {

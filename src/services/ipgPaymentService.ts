@@ -94,11 +94,20 @@ class IPGWebCheckoutService {
   /**
    * Create a hidden form and submit it to redirect to IPG checkout
    */
-  createCheckoutForm(checkoutRequest: IPGWebCheckoutRequest): void {
-    const response = this.createWebCheckout(checkoutRequest);
-    
-    response.then(result => {
+  async createCheckoutForm(checkoutRequest: IPGWebCheckoutRequest): Promise<void> {
+    try {
+      console.log('Creating IPG checkout form...', {
+        merchantId: this.merchantId,
+        checkoutUrl: this.checkoutUrl,
+        amount: checkoutRequest.amount,
+        orderId: checkoutRequest.orderId
+      });
+
+      const result = await this.createWebCheckout(checkoutRequest);
+      
       if (result.success && result.formData) {
+        console.log('Checkout form data:', result.formData);
+        
         // Create a hidden form
         const form = document.createElement('form');
         form.method = 'POST';
@@ -117,13 +126,17 @@ class IPGWebCheckoutService {
 
         // Add form to page and submit
         document.body.appendChild(form);
+        console.log('Submitting form to IPG...');
         form.submit();
         document.body.removeChild(form);
       } else {
         console.error('Failed to create checkout form:', result.error);
-        alert('Payment initialization failed. Please try again.');
+        alert(`Payment initialization failed: ${result.error || 'Unknown error'}`);
       }
-    });
+    } catch (error) {
+      console.error('Error creating checkout form:', error);
+      alert('Payment initialization failed. Please try again.');
+    }
   }
 
   /**

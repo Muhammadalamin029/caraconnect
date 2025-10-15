@@ -10,7 +10,6 @@ import {
   CurrencyDollarIcon,
   MapPinIcon
 } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 interface TaskTemplate {
@@ -188,19 +187,26 @@ const TaskTemplatePage: FC = () => {
       }
 
       // Create task from template
+      const rewardAmount = template.default_reward_amount;
+      const commissionAmount = Math.round(rewardAmount * 0.05); // 5% commission
+      const runnerAmount = rewardAmount - commissionAmount;
+      
       const taskData = {
+        requester_id: user.uid,
         title: template.name,
         description: template.description,
         category: template.category as 'delivery' | 'pickup' | 'errand' | 'other',
-        reward_amount: template.default_reward_amount,
+        status: 'pending' as const,
+        reward_amount: rewardAmount,
+        commission_amount: commissionAmount,
+        runner_amount: runnerAmount,
         pickup_location: template.pickup_location,
         delivery_location: template.delivery_location,
-        deadline: new Date(Date.now() + template.estimated_duration * 60 * 60 * 1000), // Add estimated duration
-        instructions: template.instructions || '',
-        status: 'pending' as const,
+        deadline: new Date(Date.now() + template.estimated_duration * 60 * 60 * 1000),
+        expected_duration: template.estimated_duration,
       };
 
-      const newTask = await createNewTask(taskData);
+      await createNewTask(taskData);
       toast.success('Task created from template successfully!');
       // Navigate to task details or task list
     } catch (error: any) {

@@ -5,8 +5,8 @@ import { useAuth } from '../contexts/AuthContext';
 const ProfileSetupPage: React.FC = () => {
   const [formData, setFormData] = useState({
     phone: '',
-    gender: '',
-    preferred_payment_method: 'card',
+    gender: 'male' as 'male' | 'female' | 'other' | 'prefer_not_to_say',
+    preferred_payment_method: 'card' as 'card' | 'bank_transfer' | 'wallet',
     is_runner: false,
     is_requester: false,
   });

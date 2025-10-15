@@ -120,7 +120,7 @@ export const PaymentProvider: FC<{ children: ReactNode }> = ({ children }) => {
         setCurrentPayment(checkoutResponse);
         
         // Redirect to IPG checkout page
-        ipgWebCheckoutService.createCheckoutForm(checkoutRequest);
+        await ipgWebCheckoutService.createCheckoutForm(checkoutRequest);
         
         return checkoutResponse;
       } else {

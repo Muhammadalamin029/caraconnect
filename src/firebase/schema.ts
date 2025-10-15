@@ -7,6 +7,7 @@ export interface User {
   phone?: string;
   full_name: string;
   photo_url?: string;
+  bio?: string;
   gender?: 'male' | 'female' | 'other' | 'prefer_not_to_say';
   preferred_payment_method?: 'card' | 'bank_transfer' | 'wallet';
   is_runner: boolean;

@@ -4,8 +4,7 @@ import {
   UserIcon,
   PencilIcon,
   CameraIcon,
-  CheckBadgeIcon,
-  XMarkIcon
+  CheckBadgeIcon
 } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
