@@ -164,38 +164,38 @@ const TaskCreatePage: FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 p-8">
+    <div className="min-h-screen bg-slate-900 p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
             <button
               onClick={() => navigate('/tasks')}
-              className="inline-flex items-center text-slate-400 hover:text-white transition-colors"
+              className="inline-flex items-center text-slate-400 hover:text-white transition-colors text-sm sm:text-base"
             >
-              <ArrowLeftIcon className="h-5 w-5 mr-2" />
+              <ArrowLeftIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               Back to Tasks
             </button>
             
             <Link
               to="/task-templates"
-              className="inline-flex items-center px-4 py-2 border border-cyan-600 text-cyan-400 rounded-lg hover:bg-cyan-600 hover:text-white transition-colors"
+              className="inline-flex items-center px-3 sm:px-4 py-2 border border-cyan-600 text-cyan-400 rounded-lg hover:bg-cyan-600 hover:text-white transition-colors text-sm"
             >
               <DocumentDuplicateIcon className="h-4 w-4 mr-2" />
               Use Template
             </Link>
           </div>
           
-          <h1 className="text-3xl font-bold text-white mb-2">Create New Task</h1>
-          <p className="text-slate-400">Post a task and find someone to help you out</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Create New Task</h1>
+          <p className="text-sm sm:text-base text-slate-400">Post a task and find someone to help you out</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
           {/* Basic Information */}
-          <div className="bg-slate-800 rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-white mb-6">Basic Information</h2>
+          <div className="bg-slate-800 rounded-lg p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Basic Information</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-slate-300 mb-2">
                   Task Title *
@@ -266,10 +266,10 @@ const TaskCreatePage: FC = () => {
           </div>
 
           {/* Locations */}
-          <div className="bg-slate-800 rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-white mb-6">Locations</h2>
+          <div className="bg-slate-800 rounded-lg p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Locations</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">
                   Pickup Location *
@@ -321,10 +321,10 @@ const TaskCreatePage: FC = () => {
           </div>
 
           {/* Timing */}
-          <div className="bg-slate-800 rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-white mb-6">Timing</h2>
+          <div className="bg-slate-800 rounded-lg p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Timing</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">
                   Deadline *

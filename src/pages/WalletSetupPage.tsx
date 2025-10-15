@@ -39,7 +39,6 @@ const WalletSetupPage: FC = () => {
         total_spent: 0,
       });
       
-      console.log('Wallet created successfully:', newWallet);
       toast.success('Wallet created successfully!');
       
       // Refresh wallet context and then navigate

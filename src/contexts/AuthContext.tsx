@@ -51,9 +51,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       if (profile) {
         setUserProfile(profile);
-        console.log('User profile loaded successfully');
       } else {
-        console.log('No user profile found, creating basic profile...');
         
         // Create a basic profile for users who don't have one (e.g., Google OAuth users)
         try {
@@ -85,7 +83,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
               total_spent: 0,
             });
             
-            console.log('Basic user profile and wallet created');
             setUserProfile(null); // Still redirect to profile setup for role selection
           } else {
             setUserProfile(null);
@@ -111,7 +108,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     // Set a timeout to prevent infinite loading
     timeoutId = setTimeout(() => {
       if (isMounted) {
-        console.log('Auth initialization timeout, setting loading to false');
         setLoading(false);
       }
     }, 10000); // 10 second timeout
@@ -145,7 +141,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const { user: firebaseUser } = await createUserWithEmailAndPassword(auth, email, password);
       
-      console.log('Signup successful:', firebaseUser.uid);
       
       // Manually create user profile
       try {
@@ -170,7 +165,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           total_spent: 0,
         });
         
-        console.log('User profile and wallet created successfully');
       } catch (profileError) {
         console.error('Error creating user profile:', profileError);
         // Don't throw here - user is created in auth, profile can be created later

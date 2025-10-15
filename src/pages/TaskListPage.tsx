@@ -87,29 +87,29 @@ const TaskListPage: FC = () => {
   }
 
   return (
-    <div className="py-6">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+    <div className="py-4 sm:py-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Browse Tasks</h1>
-          <p className="text-slate-400">Find tasks that match your skills and location</p>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Browse Tasks</h1>
+          <p className="text-sm sm:text-base text-slate-400">Find tasks that match your skills and location</p>
         </div>
 
         {/* Filters and Search */}
-        <div className="mb-6 flex flex-col sm:flex-row gap-4">
+        <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
           <div className="flex-1">
             <input
               type="text"
               placeholder="Search tasks..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 sm:px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0">
             <button
               onClick={() => setFilter('all')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors text-sm whitespace-nowrap ${
                 filter === 'all'
                   ? 'bg-blue-600 text-white'
                   : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -119,7 +119,7 @@ const TaskListPage: FC = () => {
             </button>
             <button
               onClick={() => setFilter('pending')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors text-sm whitespace-nowrap ${
                 filter === 'pending'
                   ? 'bg-blue-600 text-white'
                   : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -148,29 +148,29 @@ const TaskListPage: FC = () => {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredTasks.map((task) => (
               <div
                 key={task.id}
-                className="bg-slate-800 rounded-lg p-6 hover:bg-slate-750 transition-colors border border-slate-700"
+                className="bg-slate-800 rounded-lg p-4 sm:p-6 hover:bg-slate-750 transition-colors border border-slate-700"
               >
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between mb-3 sm:mb-4">
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl">{getCategoryIcon(task.category)}</span>
+                    <span className="text-xl sm:text-2xl">{getCategoryIcon(task.category)}</span>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(task.status)}`}>
                       {task.status.replace('_', ' ')}
                     </span>
                   </div>
-                  <span className="text-2xl font-bold text-green-400">
+                  <span className="text-lg sm:text-2xl font-bold text-green-400">
                     {formatCurrency(task.reward_amount)}
                   </span>
                 </div>
 
-                <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2">
+                <h3 className="text-base sm:text-lg font-semibold text-white mb-2 line-clamp-2">
                   {task.title}
                 </h3>
                 
-                <p className="text-slate-400 text-sm mb-4 line-clamp-3">
+                <p className="text-slate-400 text-sm mb-3 sm:mb-4 line-clamp-3">
                   {task.description}
                 </p>
 

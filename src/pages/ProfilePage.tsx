@@ -82,33 +82,33 @@ const ProfilePage: FC = () => {
   }
 
   return (
-    <div className="py-6">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+    <div className="py-4 sm:py-6">
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">My Profile</h1>
-          <p className="text-slate-400">Manage your profile information and preferences</p>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">My Profile</h1>
+          <p className="text-sm sm:text-base text-slate-400">Manage your profile information and preferences</p>
         </div>
 
-        <div className="bg-slate-800 rounded-lg border border-slate-700 p-6">
+        <div className="bg-slate-800 rounded-lg border border-slate-700 p-4 sm:p-6">
           {/* Profile Photo Section */}
-          <div className="flex items-center space-x-6 mb-8">
-            <div className="relative">
-              <div className="w-24 h-24 rounded-full bg-slate-700 flex items-center justify-center">
-                <UserIcon className="h-12 w-12 text-slate-400" />
+          <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-6 sm:mb-8">
+            <div className="relative flex-shrink-0">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-slate-700 flex items-center justify-center">
+                <UserIcon className="h-10 w-10 sm:h-12 sm:w-12 text-slate-400" />
               </div>
               <button
                 type="button"
-                className="absolute bottom-0 right-0 bg-cyan-500 text-white p-2 rounded-full hover:bg-cyan-600 transition-colors"
+                className="absolute bottom-0 right-0 bg-cyan-500 text-white p-1.5 sm:p-2 rounded-full hover:bg-cyan-600 transition-colors"
                 disabled={!isEditing}
               >
-                <CameraIcon className="h-4 w-4" />
+                <CameraIcon className="h-3 w-3 sm:h-4 sm:w-4" />
               </button>
             </div>
-            <div>
-              <h2 className="text-xl font-semibold text-white">{userProfile.full_name}</h2>
-              <p className="text-slate-400">{user.email}</p>
-              <div className="flex items-center space-x-4 mt-2">
+            <div className="flex-1">
+              <h2 className="text-lg sm:text-xl font-semibold text-white">{userProfile.full_name}</h2>
+              <p className="text-sm sm:text-base text-slate-400">{user.email}</p>
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2">
                 {userProfile.is_runner && (
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                     <CheckBadgeIcon className="h-3 w-3 mr-1" />
@@ -127,7 +127,7 @@ const ProfilePage: FC = () => {
 
           {/* Profile Information */}
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">
                   Full Name
@@ -193,7 +193,7 @@ const ProfilePage: FC = () => {
               </div>
             </div>
 
-            <div>
+            <div className="sm:col-span-2">
               <label className="block text-sm font-medium text-slate-300 mb-2">
                 Bio
               </label>

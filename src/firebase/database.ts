@@ -591,3 +591,43 @@ export const subscribeToNotifications = (userId: string, callback: (notification
     callback(notifications);
   });
 };
+
+// ==================== ADMIN OPERATIONS ====================
+
+export const getAllUsers = async (): Promise<User[]> => {
+  const usersRef = collection(db, 'users');
+  const q = query(usersRef, orderBy('created_at', 'desc'));
+  
+  const usersSnap = await getDocs(q);
+  return usersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() } as User));
+};
+
+export const getAllWallets = async (): Promise<Wallet[]> => {
+  const walletsRef = collection(db, 'wallets');
+  const q = query(walletsRef, orderBy('created_at', 'desc'));
+  
+  const walletsSnap = await getDocs(q);
+  return walletsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Wallet));
+};
+
+export const getAllTransactions = async (): Promise<Transaction[]> => {
+  const transactionsRef = collection(db, 'transactions');
+  const q = query(transactionsRef, orderBy('created_at', 'desc'));
+  
+  const transactionsSnap = await getDocs(q);
+  return transactionsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Transaction));
+};
+
+export const getAllReviews = async (): Promise<Review[]> => {
+  const reviewsRef = collection(db, 'reviews');
+  const q = query(reviewsRef, orderBy('created_at', 'desc'));
+  
+  const reviewsSnap = await getDocs(q);
+  return reviewsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Review));
+};
+
+export const deleteUser = async (userId: string) => {
+  const userRef = doc(db, 'users', userId);
+  await deleteDoc(userRef);
+};
+

@@ -133,9 +133,9 @@ const WalletPage: FC = () => {
         // Handle wallet-to-wallet transfer
         await deposit(amount, 'wallet');
         toast.success('Deposit completed successfully!');
-        setShowDepositModal(false);
-        setDepositAmount('');
-        await refreshWallet();
+      setShowDepositModal(false);
+      setDepositAmount('');
+      await refreshWallet();
       } else {
         // Handle external payment (card/bank transfer) via IPG
         console.log('Initiating IPG payment...', { amount, depositMethod });
@@ -234,16 +234,16 @@ const WalletPage: FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 p-8">
+    <div className="min-h-screen bg-slate-900 p-4 sm:p-6 lg:p-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-white mb-2">
+              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                 {userProfile?.is_runner ? 'Earnings Wallet' : 'Task Wallet'}
               </h1>
-              <p className="text-slate-400">
+              <p className="text-sm sm:text-base text-slate-400">
                 {userProfile?.is_runner 
                   ? 'Track your earnings and manage withdrawals' 
                   : 'Manage funds for posting tasks and view spending history'
@@ -253,7 +253,7 @@ const WalletPage: FC = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => refreshWallet()}
-                className="inline-flex items-center px-4 py-2 border border-slate-600 text-slate-300 rounded-lg hover:bg-slate-700 hover:text-white transition-colors"
+                className="inline-flex items-center px-3 sm:px-4 py-2 border border-slate-600 text-slate-300 rounded-lg hover:bg-slate-700 hover:text-white transition-colors text-sm"
               >
                 <ArrowPathIcon className="h-4 w-4 mr-2" />
                 Refresh
@@ -265,90 +265,90 @@ const WalletPage: FC = () => {
         {/* Wallet Balance Cards - Different for Runners vs Requesters */}
         {userProfile?.is_runner ? (
           // Runner Wallet View
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-slate-400 text-sm">Available Balance</p>
-                  <p className="text-2xl font-bold text-white">
-                    {wallet ? formatCurrency(wallet.balance) : '₦0.00'}
-                  </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700">
+            <div className="flex items-center justify-between">
+              <div>
+                  <p className="text-slate-400 text-xs sm:text-sm">Available Balance</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">
+                  {wallet ? formatCurrency(wallet.balance) : '₦0.00'}
+                </p>
                 </div>
-                <CurrencyDollarIcon className="h-8 w-8 text-green-500" />
+                <CurrencyDollarIcon className="h-6 w-6 sm:h-8 sm:w-8 text-green-500" />
               </div>
             </div>
 
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
+            <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-400 text-sm">Escrow Balance</p>
-                  <p className="text-2xl font-bold text-white">
+                  <p className="text-slate-400 text-xs sm:text-sm">Escrow Balance</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">
                     {wallet ? formatCurrency(wallet.escrow_balance) : '₦0.00'}
                   </p>
                   <p className="text-xs text-slate-500 mt-1">Money from accepted tasks</p>
                 </div>
-                <ClockIcon className="h-8 w-8 text-yellow-500" />
+                <ClockIcon className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-500" />
               </div>
             </div>
 
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
+            <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700 sm:col-span-2 lg:col-span-1">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-400 text-sm">Total Earned</p>
-                  <p className="text-2xl font-bold text-white">
+                  <p className="text-slate-400 text-xs sm:text-sm">Total Earned</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">
                     {wallet ? formatCurrency(wallet.total_earned) : '₦0.00'}
                   </p>
                   <p className="text-xs text-slate-500 mt-1">Lifetime earnings</p>
                 </div>
-                <CheckCircleIcon className="h-8 w-8 text-blue-500" />
+                <CheckCircleIcon className="h-6 w-6 sm:h-8 sm:w-8 text-blue-500" />
               </div>
             </div>
           </div>
         ) : (
           // Requester Wallet View
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-400 text-sm">Available Balance</p>
-                  <p className="text-2xl font-bold text-white">
+                  <p className="text-slate-400 text-xs sm:text-sm">Available Balance</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">
                     {wallet ? formatCurrency(wallet.balance) : '₦0.00'}
                   </p>
                 </div>
-                <CurrencyDollarIcon className="h-8 w-8 text-green-500" />
-              </div>
+                <CurrencyDollarIcon className="h-6 w-6 sm:h-8 sm:w-8 text-green-500" />
             </div>
+          </div>
 
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-slate-400 text-sm">Escrow Balance</p>
-                  <p className="text-2xl font-bold text-white">
-                    {wallet ? formatCurrency(wallet.escrow_balance) : '₦0.00'}
-                  </p>
+            <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700">
+            <div className="flex items-center justify-between">
+              <div>
+                  <p className="text-slate-400 text-xs sm:text-sm">Escrow Balance</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">
+                  {wallet ? formatCurrency(wallet.escrow_balance) : '₦0.00'}
+                </p>
                   <p className="text-xs text-slate-500 mt-1">Money held for active tasks</p>
                 </div>
-                <ClockIcon className="h-8 w-8 text-yellow-500" />
-              </div>
+                <ClockIcon className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-500" />
             </div>
+          </div>
 
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-slate-400 text-sm">Total Spent</p>
-                  <p className="text-2xl font-bold text-white">
+            <div className="bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-700 sm:col-span-2 lg:col-span-1">
+            <div className="flex items-center justify-between">
+              <div>
+                  <p className="text-slate-400 text-xs sm:text-sm">Total Spent</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">
                     {wallet ? formatCurrency(wallet.total_spent) : '₦0.00'}
                   </p>
                   <p className="text-xs text-slate-500 mt-1">Total on tasks</p>
                 </div>
-                <ArrowDownTrayIcon className="h-8 w-8 text-red-500" />
+                <ArrowDownTrayIcon className="h-6 w-6 sm:h-8 sm:w-8 text-red-500" />
               </div>
             </div>
           </div>
         )}
 
         {/* Action Buttons - Different for Runners vs Requesters */}
-        <div className="flex gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
           {userProfile?.is_runner ? (
             // Runner Actions
             <>
@@ -370,20 +370,20 @@ const WalletPage: FC = () => {
           ) : (
             // Requester Actions
             <>
-              <button
-                onClick={() => setShowDepositModal(true)}
-                className="btn-primary flex items-center gap-2"
-              >
-                <PlusIcon className="h-5 w-5" />
-                Add Funds
-              </button>
-              <button
+          <button
+            onClick={() => setShowDepositModal(true)}
+            className="btn-primary flex items-center gap-2"
+          >
+            <PlusIcon className="h-5 w-5" />
+            Add Funds
+          </button>
+          <button
                 onClick={() => navigate('/tasks/create')}
-                className="btn-secondary flex items-center gap-2"
-              >
+            className="btn-secondary flex items-center gap-2"
+          >
                 <PlusIcon className="h-5 w-5" />
                 Post New Task
-              </button>
+          </button>
             </>
           )}
         </div>
@@ -427,8 +427,8 @@ const WalletPage: FC = () => {
 
         {/* Deposit Modal */}
         {showDepositModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-slate-800 rounded-lg p-6 w-full max-w-md">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 sm:p-4 z-50">
+            <div className="bg-slate-800 rounded-lg p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
               <h3 className="text-lg font-semibold text-white mb-4">Add Funds</h3>
               <form onSubmit={handleDeposit}>
                 <div className="mb-4">
@@ -495,8 +495,8 @@ const WalletPage: FC = () => {
 
         {/* Withdraw Modal */}
         {showWithdrawModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-slate-800 rounded-lg p-6 w-full max-w-md">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 sm:p-4 z-50">
+            <div className="bg-slate-800 rounded-lg p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
               <h3 className="text-lg font-semibold text-white mb-4">Withdraw Funds</h3>
               <form onSubmit={handleWithdraw}>
                 <div className="space-y-4">
