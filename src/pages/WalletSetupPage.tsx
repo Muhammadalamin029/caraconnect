@@ -31,7 +31,7 @@ const WalletSetupPage: FC = () => {
       const { createWallet } = await import('../firebase/database');
       
       // Create wallet for the user
-      const newWallet = await createWallet({
+      await createWallet({
         user_id: user.uid,
         balance: 0,
         escrow_balance: 0,
